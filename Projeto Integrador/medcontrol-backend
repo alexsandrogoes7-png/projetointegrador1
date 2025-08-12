@@ -1,0 +1,17 @@
+medcontrol-backend/
+│   package.json
+│   server.js
+│   .env
+│
+├── config/
+│     db.js
+│
+├── models/
+│     medicamento.js
+│
+├── routes/
+│     medicamentoRoutes.js
+│
+└── controllers/
+      medicamentoController.js
+
