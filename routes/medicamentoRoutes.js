@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { criarMedicamento, listarMedicamentos, criarMedicamentoAtualizado } = require("../controllers/medicamentoController");
+const {
+  criarMedicamento,
+  listarMedicamentos,
+  criarMedicamentoAtualizado,
+  deletarMedicamento
+} = require("../controllers/medicamentoController");
 
 router.post("/", criarMedicamento);
 router.get("/", listarMedicamentos);
-router.put("/:id", criarMedicamentoAtualizado); // PUT para atualizar medicamento
+router.put("/:id", criarMedicamentoAtualizado);
+router.delete("/:id", deletarMedicamento); // rota DELETE
 
-module.exports = router; // exportar **depois de todas as rotas**
+module.exports = router;

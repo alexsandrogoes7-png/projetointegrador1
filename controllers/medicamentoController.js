@@ -56,3 +56,22 @@ exports.criarMedicamentoAtualizado = async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 };
+
+// Deletar medicamento
+exports.deletarMedicamento = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const medicamentoDeletado = await Medicamento.findByIdAndDelete(id);
+
+    if (!medicamentoDeletado) {
+      return res.status(404).json({ error: "Medicamento não encontrado" });
+    }
+
+    res.json({ message: "Medicamento deletado com sucesso" });
+  } catch (err) {
+    console.error("Erro ao deletar medicamento:", err);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+};
+
