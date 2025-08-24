@@ -1,7 +1,7 @@
 const lista = document.getElementById("medicamentos-lista");
 
 // Substitua pelo IP do seu computador se estiver usando celular na mesma rede
-const API_URL = "http://10.217.17.166:10000/api/medicamentos";
+const API_URL = "http://10.217.17.166:10000/medicamentos";
 
 async function carregarMedicamentos() {
     const resposta = await fetch(API_URL);
