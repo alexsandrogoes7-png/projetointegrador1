@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>App de Medicamentos</title>
+</head>
+<body>
+    <h1>Lista de Medicamentos</h1>
+    <ul id="medicamentos-lista"></ul>
+
+    <h2>Adicionar Novo Medicamento</h2>
+<form id="form-med">
+    <input type="text" id="nome" placeholder="Nome" required>
+    <input type="text" id="dose" placeholder="Dose" required>
+    <input type="time" id="horario" required> <!-- campo horário -->
+    <button type="submit">Adicionar</button>
+</form>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
