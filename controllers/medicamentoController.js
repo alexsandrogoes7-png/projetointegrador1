@@ -1,10 +1,7 @@
-const Medicamento = require("../models/medicamento");
-
-// Criar medicamento
-exports.criarMedicamento = async (req, res) => {
+// Atualizar medicamento
+exports.criarMedicamentoAtualizado = async (req, res) => {
   try {
-    console.log("Recebido:", req.body); // Log do JSON recebido
-
+    const { id } = req.params;
     const { nome, quantidade, validade, dose, horario } = req.body;
 
     // Validação dos campos obrigatórios
@@ -12,24 +9,19 @@ exports.criarMedicamento = async (req, res) => {
       return res.status(400).json({ error: "Campos obrigatórios faltando!" });
     }
 
-    // Cria o medicamento com todos os campos
-    const novoMedicamento = new Medicamento({ nome, quantidade, validade, dose, horario });
-    await novoMedicamento.save();
+    const medicamentoAtualizado = await Medicamento.findByIdAndUpdate(
+      id,
+      { nome, quantidade, validade, dose, horario },
+      { new: true, runValidators: true }
+    );
 
-    res.status(201).json(novoMedicamento);
-  } catch (err) {
-    console.error("Erro ao criar medicamento:", err); // Mostra o erro real no console
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-};
+    if (!medicamentoAtualizado) {
+      return res.status(404).json({ error: "Medicamento não encontrado" });
+    }
 
-// Listar todos os medicamentos
-exports.listarMedicamentos = async (req, res) => {
-  try {
-    const medicamentos = await Medicamento.find();
-    res.json(medicamentos);
+    res.json(medicamentoAtualizado);
   } catch (err) {
-    console.error("Erro ao listar medicamentos:", err);
+    console.error("Erro ao atualizar medicamento:", err);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 };

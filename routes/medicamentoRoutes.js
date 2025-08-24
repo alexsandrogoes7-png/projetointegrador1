@@ -4,11 +4,6 @@ const { criarMedicamento, listarMedicamentos, criarMedicamentoAtualizado } = req
 
 router.post("/", criarMedicamento);
 router.get("/", listarMedicamentos);
+router.put("/:id", criarMedicamentoAtualizado); // PUT para atualizar medicamento
 
 module.exports = router;
-
-// Atualizar medicamento pelo ID
-router.put("/:id", criarMedicamentoAtualizado);
-
-module.exports = router;
-
