@@ -1,10 +1,17 @@
+const Medicamento = require("../models/medicamento");
+
+// Criar medicamento
+exports.criarMedicamento = async (req, res) => { ... };
+
+// Listar medicamentos
+exports.listarMedicamentos = async (req, res) => { ... };
+
 // Atualizar medicamento
 exports.criarMedicamentoAtualizado = async (req, res) => {
   try {
     const { id } = req.params;
     const { nome, quantidade, validade, dose, horario } = req.body;
 
-    // Validação dos campos obrigatórios
     if (!nome || !quantidade || !validade || !dose || !horario) {
       return res.status(400).json({ error: "Campos obrigatórios faltando!" });
     }
@@ -25,11 +32,3 @@ exports.criarMedicamentoAtualizado = async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 };
-
-// medicamentoController.js
-function criarMedicamento(req, res) {
-    // lógica de criação do medicamento
-    res.send("Medicamento criado!");
-}
-
-module.exports = { criarMedicamento }; // ✅ exporta como objeto
