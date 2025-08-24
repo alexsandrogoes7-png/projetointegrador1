@@ -6,3 +6,9 @@ router.post("/", criarMedicamento);
 router.get("/", listarMedicamentos);
 
 module.exports = router;
+
+// Atualizar medicamento pelo ID
+router.put("/:id", criarMedicamentoAtualizado);
+
+module.exports = router;
+
