@@ -25,3 +25,11 @@ exports.criarMedicamentoAtualizado = async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 };
+
+// medicamentoController.js
+function criarMedicamento(req, res) {
+    // lógica de criação do medicamento
+    res.send("Medicamento criado!");
+}
+
+module.exports = { criarMedicamento }; // ✅ exporta como objeto
