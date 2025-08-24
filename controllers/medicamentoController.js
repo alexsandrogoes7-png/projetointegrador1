@@ -5,14 +5,15 @@ exports.criarMedicamento = async (req, res) => {
   try {
     console.log("Recebido:", req.body); // Log do JSON recebido
 
-    const { nome, quantidade, validade } = req.body;
+    const { nome, quantidade, validade, dose, horario } = req.body;
 
-    // Validação simples
-    if (!nome || !quantidade || !validade) {
+    // Validação dos campos obrigatórios
+    if (!nome || !quantidade || !validade || !dose || !horario) {
       return res.status(400).json({ error: "Campos obrigatórios faltando!" });
     }
 
-    const novoMedicamento = new Medicamento({ nome, quantidade, validade });
+    // Cria o medicamento com todos os campos
+    const novoMedicamento = new Medicamento({ nome, quantidade, validade, dose, horario });
     await novoMedicamento.save();
 
     res.status(201).json(novoMedicamento);
@@ -22,7 +23,7 @@ exports.criarMedicamento = async (req, res) => {
   }
 };
 
-// Listar todos
+// Listar todos os medicamentos
 exports.listarMedicamentos = async (req, res) => {
   try {
     const medicamentos = await Medicamento.find();
