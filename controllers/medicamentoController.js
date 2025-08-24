@@ -1,77 +1,61 @@
 const Medicamento = require("../models/medicamento");
 
 // Criar medicamento
-exports.criarMedicamento = async (req, res) => {
-  try {
-    const { nome, quantidade, validade, dose, horario } = req.body;
+async function criarMedicamento(req, res) {
+    const { nome, dose } = req.body;
 
-    if (!nome || !quantidade || !validade || !dose || !horario) {
-      return res.status(400).json({ error: "Campos obrigatórios faltando!" });
+    if (!nome || !dose) {
+        return res.status(400).json({ error: "Nome e dose são obrigatórios" });
     }
 
-    const novoMedicamento = new Medicamento({ nome, quantidade, validade, dose, horario });
-    await novoMedicamento.save();
+    try {
+        const novoMed = await Medicamento.create({ nome, dose });
+        res.status(201).json(novoMed);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao criar medicamento" });
+    }
+}
 
-    res.status(201).json(novoMedicamento);
-  } catch (err) {
-    console.error("Erro ao criar medicamento:", err);
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-};
-
-// Listar medicamentos
-exports.listarMedicamentos = async (req, res) => {
-  try {
-    const medicamentos = await Medicamento.find();
-    res.json(medicamentos);
-  } catch (err) {
-    console.error("Erro ao listar medicamentos:", err);
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-};
+// Listar todos
+async function listarMedicamentos(req, res) {
+    try {
+        const medicamentos = await Medicamento.find();
+        res.json(medicamentos);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao listar medicamentos" });
+    }
+}
 
 // Atualizar medicamento
-exports.criarMedicamentoAtualizado = async (req, res) => {
-  try {
+async function criarMedicamentoAtualizado(req, res) {
     const { id } = req.params;
-    const { nome, quantidade, validade, dose, horario } = req.body;
+    const { nome, dose } = req.body;
 
-    if (!nome || !quantidade || !validade || !dose || !horario) {
-      return res.status(400).json({ error: "Campos obrigatórios faltando!" });
+    try {
+        const med = await Medicamento.findByIdAndUpdate(id, { nome, dose }, { new: true });
+        if (!med) return res.status(404).json({ error: "Medicamento não encontrado" });
+        res.json(med);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao atualizar medicamento" });
     }
-
-    const medicamentoAtualizado = await Medicamento.findByIdAndUpdate(
-      id,
-      { nome, quantidade, validade, dose, horario },
-      { new: true, runValidators: true }
-    );
-
-    if (!medicamentoAtualizado) {
-      return res.status(404).json({ error: "Medicamento não encontrado" });
-    }
-
-    res.json(medicamentoAtualizado);
-  } catch (err) {
-    console.error("Erro ao atualizar medicamento:", err);
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-};
+}
 
 // Deletar medicamento
-exports.deletarMedicamento = async (req, res) => {
-  try {
+async function deletarMedicamento(req, res) {
     const { id } = req.params;
 
-    const medicamentoDeletado = await Medicamento.findByIdAndDelete(id);
-
-    if (!medicamentoDeletado) {
-      return res.status(404).json({ error: "Medicamento não encontrado" });
+    try {
+        const med = await Medicamento.findByIdAndDelete(id);
+        if (!med) return res.status(404).json({ error: "Medicamento não encontrado" });
+        res.json({ message: "Medicamento deletado com sucesso" });
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao deletar medicamento" });
     }
+}
 
-    res.json({ message: "Medicamento deletado com sucesso" });
-  } catch (err) {
-    console.error("Erro ao deletar medicamento:", err);
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
+module.exports = {
+    criarMedicamento,
+    listarMedicamentos,
+    criarMedicamentoAtualizado,
+    deletarMedicamento
 };
-
