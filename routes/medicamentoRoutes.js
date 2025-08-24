@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { criarMedicamento } = require("../controllers/medicamentoController"); // ✅ desestruturação
+const { criarMedicamento, listarMedicamentos, criarMedicamentoAtualizado } = require("../controllers/medicamentoController");
 
-router.post("/medicamentos", criarMedicamento); // ✅ agora é função
+router.post("/", criarMedicamento);
+router.get("/", listarMedicamentos);
+router.put("/:id", criarMedicamentoAtualizado); // PUT para atualizar medicamento
 
-module.exports = router;
+module.exports = router; // exportar **depois de todas as rotas**
