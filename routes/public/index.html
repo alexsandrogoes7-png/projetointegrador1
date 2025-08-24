@@ -2,20 +2,17 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>App de Medicamentos</title>
+    <title>Lista de Medicamentos</title>
 </head>
 <body>
-    <h1>Lista de Medicamentos</h1>
+    <h1>Medicamentos</h1>
     <ul id="medicamentos-lista"></ul>
 
     <h2>Adicionar Medicamento</h2>
-<form id="form-med">
-    <input type="text" id="nome" placeholder="Nome" required>
-    <input type="text" id="dose" placeholder="Dose" required>
-    <input type="time" id="horario" required> <!-- campo horário -->
-    <button type="submit">Adicionar</button>
-</form>
-
+    <input type="text" id="nome" placeholder="Nome">
+    <input type="text" id="dose" placeholder="Dose">
+    <input type="text" id="horario" placeholder="Horário">
+    <button id="adicionar-btn">Adicionar</button>
 
     <script src="app.js"></script>
 </body>
