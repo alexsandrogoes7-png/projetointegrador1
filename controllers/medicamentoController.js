@@ -2,14 +2,14 @@ const Medicamento = require("../models/medicamento");
 
 // Criar medicamento
 async function criarMedicamento(req, res) {
-    const { nome, dose } = req.body;
+    const { nome, dose, horario } = req.body;
 
-    if (!nome || !dose) {
-        return res.status(400).json({ error: "Nome e dose são obrigatórios" });
+    if (!nome || !dose || !horario) {
+        return res.status(400).json({ error: "Nome, dose e horário são obrigatórios" });
     }
 
     try {
-        const novoMed = await Medicamento.create({ nome, dose });
+        const novoMed = await Medicamento.create({ nome, dose, horario });
         res.status(201).json(novoMed);
     } catch (err) {
         res.status(500).json({ error: "Erro ao criar medicamento" });
@@ -29,10 +29,19 @@ async function listarMedicamentos(req, res) {
 // Atualizar medicamento
 async function criarMedicamentoAtualizado(req, res) {
     const { id } = req.params;
-    const { nome, dose } = req.body;
+    const { nome, dose, horario } = req.body;
+
+    if (!nome || !dose || !horario) {
+        return res.status(400).json({ error: "Nome, dose e horário são obrigatórios" });
+    }
 
     try {
-        const med = await Medicamento.findByIdAndUpdate(id, { nome, dose }, { new: true });
+        const med = await Medicamento.findByIdAndUpdate(
+            id,
+            { nome, dose, horario },
+            { new: true }
+        );
+
         if (!med) return res.status(404).json({ error: "Medicamento não encontrado" });
         res.json(med);
     } catch (err) {
